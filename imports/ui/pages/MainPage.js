@@ -45,9 +45,9 @@ export default class MainPage extends TrackerReact(React.Component) {
     return Centers.find({}).fetch()
   }
 
-  fetchData(){
-    HTTP.get( 'http://192.168.10.103:3333/api/bent', { /* options */ },
-              function(error, result) {
+  fetchData(codesite){
+    HTTP.get( `http://192.168.10.103:3333/api/${codesite}`, { /* options */ },
+              function(error, response) {
                 if ( error ) {
                   console.log( error );
                 } else {
@@ -76,9 +76,9 @@ export default class MainPage extends TrackerReact(React.Component) {
               <Selector id="form-select-theme" placeholder="Select theme" onChange={this.handleThemeFilter} data={this.listThemes()} />
               */}
               <Label>Filter results</Label>
-              <Radio id="SelectAllCenters" current={this.state.filter} value="all" onClick={this.handleFilter}>All Centers</Radio>
+              <Radio id="SelectAllCenters" current={this.state.filter} value="bent" onClick={this.handleFilter}>All Centers</Radio>
               {this.listCenters().map((c)=>{
-                return <Radio dataId={c._id} key={c._id} current={this.state.filter} value={c._id}  onClick={() => this.handleFilter}>{c.name}</Radio>
+                return <Radio dataId={c._id} key={c._id} current={this.state.filter} value={c.code}  onClick={() => this.handleFilter}>{c.name}</Radio>
               })}
             </LeftSidebar>
             <main style={styles.main}>
